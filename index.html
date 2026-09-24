@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>1EventApp | Smart Event Technology & Production Showcase</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,11 +19,9 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: #faf9f5;
       color: #1c1917;
-      overflow: hidden;
       margin: 0;
       padding: 0;
-      height: 100dvh;
-      width: 100vw;
+      overflow-x: hidden;
     }
     .font-luxury { font-family: 'Cinzel', serif; }
     
@@ -34,185 +32,160 @@
       background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
       border: 1px solid rgba(217, 119, 6, 0.3);
     }
-    
-    /* Presentation Deck Scroll Snap */
-    .deck-container {
-      width: 100vw;
-      height: 100dvh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .deck-container::-webkit-scrollbar {
-      display: none;
-    }
 
-    .slide {
-      width: 100vw;
-      height: 100dvh;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 5rem 1.5rem 4rem;
-    }
-
-    /* Subtle Animated Glass Panel */
     .glass-deck {
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.95);
       border: 1px solid rgba(231, 229, 228, 0.9);
-      box-shadow: 0 30px 60px -15px rgba(28, 25, 23, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(28, 25, 23, 0.06);
     }
 
-    .active-nav-dot {
-      background-color: #d97706 !important;
-      transform: scale(1.35);
+    /* سكرول حر ومريح على الموبايل، وسناب سناب شيك على الشاشات الكبيرة */
+    @media (min-width: 1024px) {
+      body {
+        overflow: hidden;
+        height: 100dvh;
+      }
+      .deck-container {
+        height: 100dvh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+      }
+      .deck-container::-webkit-scrollbar {
+        display: none;
+      }
+      .slide-section {
+        height: 100dvh;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+      }
     }
   </style>
 </head>
-<body>
+<body class="selection:bg-amber-100 selection:text-amber-900">
 
-  <!-- Floating Minimal Header -->
-  <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-white/70 backdrop-blur-md border-b border-stone-200/60">
-    <div class="flex items-center gap-3">
-      <div class="w-9 h-9 rounded-xl gold-gradient flex items-center justify-center text-white font-extrabold text-lg shadow-sm">1</div>
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-3 flex justify-between items-center bg-white/85 backdrop-blur-md border-b border-stone-200/70">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-xl gold-gradient flex items-center justify-center text-white font-extrabold text-base shadow-sm">1</div>
       <div>
-        <h1 class="text-base font-extrabold tracking-wide text-stone-900 leading-none">1EventApp</h1>
-        <p class="text-[9px] text-amber-700 font-bold tracking-widest uppercase mt-0.5">Presentation Deck</p>
+        <h1 class="text-sm font-extrabold tracking-wide text-stone-900 leading-none">1EventApp</h1>
+        <p class="text-[8px] text-amber-700 font-bold tracking-widest uppercase mt-0.5">Event Tech</p>
       </div>
     </div>
 
-    <!-- Quick Slide Switchers -->
-    <div class="hidden md:flex items-center gap-2 bg-stone-100/90 p-1 rounded-full border border-stone-200 text-xs font-semibold">
-      <button onclick="goToSlide(0)" class="px-3 py-1 rounded-full hover:bg-white transition text-stone-700" id="tab0">Overview</button>
-      <button onclick="goToSlide(1)" class="px-3 py-1 rounded-full hover:bg-white transition text-stone-700" id="tab1">01 Invitations</button>
-      <button onclick="goToSlide(2)" class="px-3 py-1 rounded-full hover:bg-white transition text-stone-700" id="tab2">02 Digital Guestbook</button>
-      <button onclick="goToSlide(3)" class="px-3 py-1 rounded-full hover:bg-white transition text-stone-700" id="tab3">03 Ushers</button>
+    <div class="hidden lg:flex items-center gap-1.5 bg-stone-100 p-1 rounded-full border border-stone-200 text-xs font-semibold">
+      <button onclick="scrollToId('slide-0')" class="px-3 py-1 rounded-full hover:bg-white text-stone-700 transition">Overview</button>
+      <button onclick="scrollToId('slide-1')" class="px-3 py-1 rounded-full hover:bg-white text-stone-700 transition">01 Invitations</button>
+      <button onclick="scrollToId('slide-2')" class="px-3 py-1 rounded-full hover:bg-white text-stone-700 transition">02 Guestbook</button>
+      <button onclick="scrollToId('slide-3')" class="px-3 py-1 rounded-full hover:bg-white text-stone-700 transition">03 Ushers</button>
     </div>
 
     <div class="flex items-center gap-2">
-      <a href="https://www.instagram.com/1eventapp" target="_blank" class="w-9 h-9 rounded-full border border-stone-200 flex items-center justify-center text-sm hover:border-amber-500 transition">
+      <a href="https://www.instagram.com/1eventapp" target="_blank" class="w-8 h-8 rounded-full border border-stone-200 flex items-center justify-center text-xs hover:border-amber-500 transition">
         📸
       </a>
-      <a href="https://wa.me/201018739978" target="_blank" class="gold-gradient text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider shadow-md hover:opacity-90 transition">
+      <a href="https://wa.me/201018739978" target="_blank" class="gold-gradient text-white px-3.5 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow hover:opacity-90 transition">
         Book Now 💬
       </a>
     </div>
   </header>
 
-  <!-- Side Presentation Indicator -->
-  <aside class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col items-center gap-3">
-    <button onclick="goToSlide(0)" class="nav-dot w-2.5 h-2.5 rounded-full bg-stone-300 transition-all duration-300" title="Intro"></button>
-    <button onclick="goToSlide(1)" class="nav-dot w-2.5 h-2.5 rounded-full bg-stone-300 transition-all duration-300" title="3D Invitations"></button>
-    <button onclick="goToSlide(2)" class="nav-dot w-2.5 h-2.5 rounded-full bg-stone-300 transition-all duration-300" title="Digital Guestbook"></button>
-    <button onclick="goToSlide(3)" class="nav-dot w-2.5 h-2.5 rounded-full bg-stone-300 transition-all duration-300" title="VIP Ushers"></button>
-  </aside>
+  <!-- Container -->
+  <main class="deck-container pt-14 lg:pt-0">
 
-  <!-- The Presentation Deck Container -->
-  <main id="deck" class="deck-container">
-
-    <!-- SLIDE 0: Hero / Intro -->
-    <section class="slide" id="slide-0">
-      <div class="max-w-4xl mx-auto text-center space-y-6">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full gold-pill text-amber-900 text-xs font-bold shadow-sm">
-          <span>✨</span> Smart Event Technology & Production Showcase
+    <!-- SLIDE 0: Hero -->
+    <section id="slide-0" class="slide-section min-h-[85dvh] lg:min-h-screen flex flex-col justify-center items-center px-4 py-8 lg:py-12 text-center">
+      <div class="max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full gold-pill text-amber-900 text-[10px] sm:text-[11px] font-bold shadow-sm">
+          <span>✨</span> Smart Event Technology & Production
         </div>
         
-        <h2 class="font-luxury text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-stone-900 uppercase leading-[1.1]">
+        <h2 class="font-luxury text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-stone-900 uppercase leading-tight">
           THE FUTURE OF <br>
           <span class="text-transparent bg-clip-text gold-gradient">EVENT EXPERIENCES</span>
         </h2>
 
-        <p class="text-stone-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-          We transform ordinary celebrations into synchronized digital productions. Scroll through the deck to explore our core 3 event services.
+        <p class="text-stone-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+          We transform ordinary celebrations into synchronized digital productions. Explore our 3 premium event solutions below.
         </p>
 
-        <div class="flex flex-wrap justify-center items-center gap-4 pt-4">
-          <button onclick="goToSlide(1)" class="px-8 py-3.5 rounded-2xl gold-gradient text-white text-xs font-bold uppercase tracking-widest shadow-lg hover:scale-105 transition flex items-center gap-2">
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2">
+          <button onclick="scrollToId('slide-1')" class="w-full sm:w-auto px-6 py-2.5 rounded-xl gold-gradient text-white text-xs font-bold uppercase tracking-widest shadow-md hover:scale-105 transition flex items-center justify-center gap-2">
             <span>Explore Services</span>
             <span>↓</span>
           </button>
-          <a href="https://wa.me/201018739978?text=Hello%201EventApp,%20I%20want%20to%20consult%20about%20my%20upcoming%20event" target="_blank" class="px-8 py-3.5 rounded-2xl bg-white border border-stone-200 text-stone-800 text-xs font-bold uppercase tracking-widest shadow-sm hover:border-amber-400 transition">
+          <a href="https://wa.me/201018739978?text=Hello%201EventApp,%20I%20want%20to%20consult%20about%20my%20upcoming%20event" target="_blank" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-white border border-stone-300 text-stone-800 text-xs font-bold uppercase tracking-widest shadow-sm hover:border-amber-400 transition">
             Direct WhatsApp Chat ↗
           </a>
-        </div>
-
-        <div class="pt-8 text-stone-400 text-xs uppercase tracking-widest animate-bounce">
-          Scroll Down to Begin Deck ↓
         </div>
       </div>
     </section>
 
     <!-- SLIDE 1: SERVICE 01 - 3D Invitations -->
-    <section class="slide" id="slide-1">
-      <div class="w-full max-w-6xl glass-deck rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <section id="slide-1" class="slide-section min-h-screen flex items-center justify-center px-4 py-6 lg:py-0">
+      <div class="w-full max-w-5xl glass-deck rounded-3xl p-5 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
         
-        <div class="lg:col-span-7 space-y-5 text-left">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-extrabold">
+        <div class="lg:col-span-7 space-y-3.5 text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-[10px] font-extrabold uppercase">
             <span>✉️</span> SERVICE 01 / 03
           </div>
           
-          <h3 class="font-luxury text-3xl md:text-5xl font-bold text-stone-900 leading-tight">
+          <h3 class="font-luxury text-2xl sm:text-4xl font-bold text-stone-900 leading-snug">
             3D Interactive Digital Invitations
           </h3>
 
-          <p class="text-stone-600 text-sm leading-relaxed">
-            Forget boring PDF or image cards. We build animated web experiences sent via WhatsApp that wow attendees with sensory unboxing animations, audio playlists, and instant Google Sheets RSVP synchronization.
+          <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+            Animated web experiences sent via WhatsApp with sensory unboxing animations, audio playlists, and instant Google Sheets RSVP synchronization.
           </p>
 
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🚪 Grand Doors & Wax Seals</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">3D door opening, envelope reveal, or Farha floral arch styling.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">3D door opening, envelope reveal, or Farha floral arch styling.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">✨ Scratch-to-Reveal Card</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Guests scratch off gold foil with their fingers to reveal the date.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Guests scratch off gold foil with their fingers to reveal the date.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">📊 Live RSVP Tracking</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Real-time attendance & guest wishes collected directly to your spreadsheet.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Real-time attendance & guest wishes collected directly to your spreadsheet.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">📍 1-Tap Google Maps</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Direct GPS destination button to avoid guests getting lost.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Direct GPS destination button to avoid guests getting lost.</p>
             </div>
           </div>
 
-          <div class="pt-3 flex flex-wrap gap-3">
-            <a href="https://marwanselim360-web.github.io/invitation/invite.html" target="_blank" class="px-6 py-3 rounded-xl gold-gradient text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition">
-              Launch Live Invitation Demo ✉️ ↗
+          <div class="pt-2 flex flex-wrap gap-2.5">
+            <a href="https://marwanselim360-web.github.io/invitation/invite.html" target="_blank" class="px-5 py-2.5 rounded-xl gold-gradient text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition">
+              Live Invitation Demo ✉️ ↗
             </a>
-            <button onclick="goToSlide(2)" class="px-6 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
-              Next Service (Digital Guestbook) →
+            <button onclick="scrollToId('slide-2')" class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
+              Next Service (Guestbook) →
             </button>
           </div>
         </div>
 
-        <!-- Phone Card Presentation Mockup -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[290px] aspect-[9/18] rounded-[36px] border-4 border-amber-300/60 bg-[#faf4ee] p-5 shadow-2xl flex flex-col justify-between text-center relative">
-            <div class="space-y-1 pt-3">
-              <span class="text-[8px] uppercase tracking-widest text-amber-800 font-bold">Interactive Experience</span>
-              <h4 class="font-serif font-bold text-2xl text-stone-800">Adam & Nada</h4>
-              <p class="text-[11px] italic text-stone-500">Royal Wedding Invitation</p>
+        <div class="lg:col-span-5 flex justify-center pt-2 lg:pt-0">
+          <div class="w-full max-w-[240px] sm:max-w-[270px] rounded-3xl border-2 border-amber-300/60 bg-[#faf4ee] p-4 shadow-xl flex flex-col justify-between text-center space-y-3">
+            <div class="space-y-0.5">
+              <span class="text-[8px] uppercase tracking-widest text-amber-800 font-bold">Interactive Demo</span>
+              <h4 class="font-serif font-bold text-xl text-stone-800">Adam & Nada</h4>
+              <p class="text-[10px] italic text-stone-500">Royal Wedding Invitation</p>
             </div>
 
-            <div class="bg-white p-3 rounded-2xl border border-stone-200 shadow-sm space-y-1.5">
-              <p class="text-[9px] uppercase font-mono font-bold text-amber-900">Live Countdown</p>
+            <div class="bg-white p-2.5 rounded-xl border border-stone-200 shadow-sm space-y-1">
+              <p class="text-[8px] uppercase font-mono font-bold text-amber-900">Live Countdown</p>
               <p class="font-mono text-xs font-extrabold text-stone-800">08d : 14h : 22m</p>
-              <div class="text-[8px] uppercase tracking-wider text-emerald-700 bg-emerald-50 py-1 rounded-md font-semibold">
+              <div class="text-[8px] uppercase tracking-wider text-emerald-700 bg-emerald-50 py-0.5 rounded font-semibold">
                 ✓ RSVP Connected
               </div>
             </div>
 
-            <a href="https://marwanselim360-web.github.io/invitation/invite.html" target="_blank" class="py-2.5 rounded-xl gold-gradient text-white text-xs font-bold shadow hover:opacity-90 transition">
+            <a href="https://marwanselim360-web.github.io/invitation/invite.html" target="_blank" class="py-2 rounded-xl gold-gradient text-white text-[11px] font-bold shadow hover:opacity-90 transition block">
               Open Demo ↗
             </a>
           </div>
@@ -221,84 +194,83 @@
       </div>
     </section>
 
-    <!-- SLIDE 2: SERVICE 02 - Real-Time Digital Guestbook & Media Vault -->
-    <section class="slide" id="slide-2">
-      <div class="w-full max-w-6xl glass-deck rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <!-- SLIDE 2: SERVICE 02 - Real-Time Digital Guestbook -->
+    <section id="slide-2" class="slide-section min-h-screen flex items-center justify-center px-4 py-6 lg:py-0">
+      <div class="w-full max-w-5xl glass-deck rounded-3xl p-5 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
         
-        <div class="lg:col-span-7 space-y-5 text-left">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold">
+        <div class="lg:col-span-7 space-y-3.5 text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-extrabold uppercase">
             <span>📸</span> SERVICE 02 / 03
           </div>
           
-          <h3 class="font-luxury text-3xl md:text-5xl font-bold text-stone-900 leading-tight">
-            Live Digital Guestbook & Real-Time Media Vault
+          <h3 class="font-luxury text-2xl sm:text-4xl font-bold text-stone-900 leading-snug">
+            Live Digital Guestbook & Media Vault
           </h3>
 
-          <p class="text-stone-600 text-sm leading-relaxed">
-            Turn your event into an instant collaborative memory hub. Guests simply scan their table's QR code to record voice notes, leave heartfelt guestbook wishes, and upload photos & videos — instantly accessible to view, share, and download in real time.
+          <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+            Turn your event into an instant collaborative memory hub. Guests scan their table QR code to record voice notes, leave guestbook wishes, and upload photos & videos — accessible to download immediately!
           </p>
 
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🪪 Custom Table QR Stands</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Elegant personalized table stands with 1-scan instant camera access.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Elegant personalized table stands with 1-scan instant access.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🎙️ Voice Notes & Audio Wishes</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Guests record authentic voice greetings and heartfelt spoken blessings.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Authentic voice greetings and heartfelt spoken blessings.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">⚡ Live Guestbook & Uploads</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Instant upload of videos, pictures, and guestbook messages in seconds.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Instant upload of videos, pictures, and wishes in seconds.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">⬇️ Real-Time Instant Download</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Download full-resolution raw videos and memories immediately during the event.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Download full-resolution memories immediately during the event.</p>
             </div>
           </div>
 
-          <div class="pt-3 flex flex-wrap gap-3">
-            <a href="https://marwanselim360-web.github.io/events-app/index.html?event=MoatazRania_20261012_eis6&title=Moataz%20%26%20Rania&type=Wedding&sub=Share%20your%20live%20moments%20with%20us&plimit=unlimited&vlimit=unlimited&voice=true&video=true&p=4a6342&bg=f8faf7&vwc=4a6342&voc=4a6342&date=10.11.2026&bg_img=https%3A%2F%2Fnameless-king-3d15.marwanselim360.workers.dev%2F%3Ffile_id%3DAgACAgQAAyEGAATktaOWAAIE92qyogH2aW_34i6S-_nPLJ-QGZM1AAJHEGsbTP6YUZ12-FjlhKouAQADAgADeQADPQQ" target="_blank" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition">
-              Test Live Guestbook Demo 📸 ↗
+          <div class="pt-2 flex flex-wrap gap-2.5">
+            <a href="https://marwanselim360-web.github.io/events-app/index.html?event=MoatazRania_20261012_eis6&title=Moataz%20%26%20Rania&type=Wedding&sub=Share%20your%20live%20moments%20with%20us&plimit=unlimited&vlimit=unlimited&voice=true&video=true&p=4a6342&bg=f8faf7&vwc=4a6342&voc=4a6342&date=10.11.2026&bg_img=https%3A%2F%2Fnameless-king-3d15.marwanselim360.workers.dev%2F%3Ffile_id%3DAgACAgQAAyEGAATktaOWAAIE92qyogH2aW_34i6S-_nPLJ-QGZM1AAJHEGsbTP6YUZ12-FjlhKouAQADAgADeQADPQQ" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition">
+              Live Guestbook Demo 📸 ↗
             </a>
-            <button onclick="goToSlide(3)" class="px-6 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
+            <button onclick="scrollToId('slide-3')" class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
               Next Service (VIP Ushers) →
             </button>
           </div>
         </div>
 
-        <!-- Phone / Tablet Web App Mockup -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[310px] rounded-3xl border-2 border-stone-200 bg-white p-5 shadow-2xl space-y-4">
-            <div class="flex items-center justify-between border-b border-stone-100 pb-3">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+        <div class="lg:col-span-5 flex justify-center pt-2 lg:pt-0">
+          <div class="w-full max-w-[250px] sm:max-w-[280px] rounded-3xl border-2 border-stone-200 bg-white p-4 shadow-xl space-y-2.5">
+            <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                 <span class="font-bold text-xs text-stone-900">Live Memory Hub</span>
               </div>
-              <span class="text-[10px] font-mono text-stone-400">NO APP NEEDED</span>
+              <span class="text-[9px] font-mono text-stone-400">NO APP NEEDED</span>
             </div>
 
-            <div class="space-y-2">
-              <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-between text-xs">
+            <div class="space-y-1.5">
+              <div class="p-2 rounded-lg bg-stone-50 border border-stone-200/60 flex items-center justify-between text-[11px]">
                 <span class="font-semibold text-stone-800">📸 Photos & 4K Videos</span>
-                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">Unlimited</span>
+                <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">Unlimited</span>
               </div>
-              <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-between text-xs">
+              <div class="p-2 rounded-lg bg-stone-50 border border-stone-200/60 flex items-center justify-between text-[11px]">
                 <span class="font-semibold text-stone-800">🎙️ Voice Note Greetings</span>
-                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">Recorded Live</span>
+                <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">Live</span>
               </div>
-              <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200/60 flex items-center justify-between text-xs">
-                <span class="font-semibold text-stone-800">✍️ Heartfelt Guestbook Wishes</span>
-                <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded">Instant Sync</span>
+              <div class="p-2 rounded-lg bg-stone-50 border border-stone-200/60 flex items-center justify-between text-[11px]">
+                <span class="font-semibold text-stone-800">✍️ Heartfelt Wishes</span>
+                <span class="text-[9px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">Instant</span>
               </div>
-              <div class="p-2.5 rounded-xl bg-amber-50/60 border border-amber-200/60 flex items-center justify-between text-xs">
+              <div class="p-2 rounded-lg bg-amber-50/60 border border-amber-200/60 flex items-center justify-between text-[11px]">
                 <span class="font-semibold text-amber-950">⬇️ Real-Time Download</span>
-                <span class="text-[10px] text-amber-800 font-bold bg-amber-100 px-2 py-0.5 rounded">Immediate</span>
+                <span class="text-[9px] text-amber-800 font-bold bg-amber-100 px-1.5 py-0.5 rounded">Direct</span>
               </div>
             </div>
 
-            <a href="https://marwanselim360-web.github.io/events-app/index.html?event=MoatazRania_20261012_eis6&title=Moataz%20%26%20Rania&type=Wedding&sub=Share%20your%20live%20moments%20with%20us&plimit=unlimited&vlimit=unlimited&voice=true&video=true&p=4a6342&bg=f8faf7&vwc=4a6342&voc=4a6342&date=10.11.2026&bg_img=https%3A%2F%2Fnameless-king-3d15.marwanselim360.workers.dev%2F%3Ffile_id%3DAgACAgQAAyEGAATktaOWAAIE92qyogH2aW_34i6S-_nPLJ-QGZM1AAJHEGsbTP6YUZ12-FjlhKouAQADAgADeQADPQQ" target="_blank" class="block w-full py-2.5 rounded-xl bg-stone-900 text-white text-xs font-bold text-center hover:bg-stone-800 transition">
-              Open Live Guestbook Demo ↗
+            <a href="https://marwanselim360-web.github.io/events-app/index.html?event=MoatazRania_20261012_eis6&title=Moataz%20%26%20Rania&type=Wedding&sub=Share%20your%20live%20moments%20with%20us&plimit=unlimited&vlimit=unlimited&voice=true&video=true&p=4a6342&bg=f8faf7&vwc=4a6342&voc=4a6342&date=10.11.2026&bg_img=https%3A%2F%2Fnameless-king-3d15.marwanselim360.workers.dev%2F%3Ffile_id%3DAgACAgQAAyEGAATktaOWAAIE92qyogH2aW_34i6S-_nPLJ-QGZM1AAJHEGsbTP6YUZ12-FjlhKouAQADAgADeQADPQQ" target="_blank" class="block w-full py-2 rounded-xl bg-stone-900 text-white text-[11px] font-bold text-center hover:bg-stone-800 transition">
+              Open Live Demo ↗
             </a>
           </div>
         </div>
@@ -306,68 +278,67 @@
       </div>
     </section>
 
-    <!-- SLIDE 3: SERVICE 03 - VIP Ushers & Coordination -->
-    <section class="slide" id="slide-3">
-      <div class="w-full max-w-6xl glass-deck rounded-3xl p-8 md:p-12 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+    <!-- SLIDE 3: SERVICE 03 - VIP Ushers -->
+    <section id="slide-3" class="slide-section min-h-screen flex items-center justify-center px-4 py-6 lg:py-0">
+      <div class="w-full max-w-5xl glass-deck rounded-3xl p-5 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 items-center">
         
-        <div class="lg:col-span-7 space-y-5 text-left">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-stone-900 text-amber-300 text-xs font-extrabold">
+        <div class="lg:col-span-7 space-y-3.5 text-left">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-900 text-amber-300 text-[10px] font-extrabold uppercase">
             <span>👔</span> SERVICE 03 / 03
           </div>
           
-          <h3 class="font-luxury text-3xl md:text-5xl font-bold text-stone-900 leading-tight">
+          <h3 class="font-luxury text-2xl sm:text-4xl font-bold text-stone-900 leading-snug">
             VIP Event Ushers & Floor Coordination
           </h3>
 
-          <p class="text-stone-600 text-sm leading-relaxed">
-            Technology is incomplete without impeccable on-ground execution. We supply elite, well-groomed teams of male and female ushers trained in VIP hospitality, protocol management, guest welcoming, and seamless crowd direction for summits, exhibitions, and luxury weddings.
+          <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+            Elite, well-groomed teams of male and female ushers trained in VIP hospitality, protocol management, guest welcoming, and crowd direction for summits, expos, and luxury weddings.
           </p>
 
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🤵 Uniform & Impeccable Attire</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Strict formal dress code tailored to match your event theme.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Strict formal dress code tailored to match your event theme.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🎟️ Gate Check-in & Seating</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Registration desk coordination, VIP guide, and table ushering.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Registration desk coordination, VIP guide, and table ushering.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">🌐 Bilingual & Experienced</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Fluent Arabic & English hosts adept at handling VIP protocols.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Fluent Arabic & English hosts adept at handling VIP protocols.</p>
             </div>
-            <div class="p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
+            <div class="p-2.5 rounded-xl bg-stone-50 border border-stone-200">
               <h5 class="text-xs font-bold text-stone-900">💼 On-Ground Event Supervisors</h5>
-              <p class="text-[11px] text-stone-500 mt-0.5">Dedicated supervisors managing team shifts and rapid problem-solving.</p>
+              <p class="text-[10px] text-stone-500 mt-0.5">Dedicated supervisors managing team shifts and rapid problem-solving.</p>
             </div>
           </div>
 
-          <div class="pt-3 flex flex-wrap gap-3">
-            <a href="https://wa.me/201018739978?text=Hello%201EventApp,%20I%20would%20like%20to%20book%20the%20VIP%20Ushers%20Team" target="_blank" class="px-6 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition flex items-center gap-2">
+          <div class="pt-2 flex flex-wrap gap-2.5">
+            <a href="https://wa.me/201018739978?text=Hello%201EventApp,%20I%20would%20like%20to%20book%20the%20VIP%20Ushers%20Team" target="_blank" class="px-5 py-2.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold uppercase tracking-wider shadow hover:scale-105 transition flex items-center gap-1.5">
               <span>Book VIP Ushers Team 👔 ↗</span>
             </a>
-            <button onclick="goToSlide(0)" class="px-6 py-3 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
+            <button onclick="scrollToId('slide-0')" class="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold transition">
               Back to Start ↑
             </button>
           </div>
         </div>
 
-        <!-- VIP Ushers Showcase Card -->
-        <div class="lg:col-span-5 flex justify-center">
-          <div class="w-full max-w-[320px] rounded-3xl bg-white border border-stone-200 shadow-xl p-6 text-center space-y-4">
-            <div class="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center text-3xl mx-auto shadow-inner">
+        <div class="lg:col-span-5 flex justify-center pt-2 lg:pt-0">
+          <div class="w-full max-w-[250px] sm:max-w-[280px] rounded-3xl bg-white border border-stone-200 shadow-xl p-4 text-center space-y-2.5">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 flex items-center justify-center text-xl mx-auto shadow-inner">
               👑
             </div>
-            <div class="space-y-1">
-              <h4 class="font-bold text-lg text-stone-900">Ready For Your Event</h4>
-              <p class="text-xs text-stone-500">Corporate Summits • Weddings • Expos</p>
+            <div class="space-y-0.5">
+              <h4 class="font-bold text-sm text-stone-900">Ready For Your Event</h4>
+              <p class="text-[9px] text-stone-500">Corporate Summits • Weddings • Expos</p>
             </div>
-            <div class="p-3 bg-stone-50 rounded-2xl border border-stone-200/70 text-xs space-y-1.5 text-stone-700 text-left">
+            <div class="p-2 bg-stone-50 rounded-xl border border-stone-200/70 text-[10px] space-y-1 text-stone-700 text-left">
               <p>✔ Male & Female Staff Supplied</p>
               <p>✔ Comprehensive Event Supervisors</p>
-              <p>✔ Seamless Integration with 1EventApp Tech</p>
+              <p>✔ Seamless Tech Integration</p>
             </div>
-            <a href="https://wa.me/201018739978" target="_blank" class="block w-full py-2.5 rounded-xl gold-gradient text-white font-bold text-xs shadow hover:opacity-90 transition">
+            <a href="https://wa.me/201018739978" target="_blank" class="block w-full py-2 rounded-xl gold-gradient text-white font-bold text-xs shadow hover:opacity-90 transition">
               Request Staff Quote
             </a>
           </div>
@@ -379,68 +350,12 @@
   </main>
 
   <script>
-    const deck = document.getElementById('deck');
-    const slides = [
-      document.getElementById('slide-0'),
-      document.getElementById('slide-1'),
-      document.getElementById('slide-2'),
-      document.getElementById('slide-3')
-    ];
-    const navDots = document.querySelectorAll('.nav-dot');
-
-    function goToSlide(index) {
-      if (slides[index]) {
-        slides[index].scrollIntoView({ behavior: 'smooth' });
+    function scrollToId(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
       }
     }
-
-    // Update active dots and tabs on scroll
-    deck.addEventListener('scroll', () => {
-      const scrollPos = deck.scrollTop;
-      const height = window.innerHeight;
-      const currentIndex = Math.round(scrollPos / height);
-
-      navDots.forEach((dot, idx) => {
-        if (idx === currentIndex) {
-          dot.classList.add('active-nav-dot');
-        } else {
-          dot.classList.remove('active-nav-dot');
-        }
-      });
-
-      // Update header tabs highlight
-      for (let i = 0; i <= 3; i++) {
-        const tab = document.getElementById('tab' + i);
-        if (tab) {
-          if (i === currentIndex) {
-            tab.className = 'px-3 py-1 rounded-full bg-white text-stone-950 font-bold shadow-xs transition';
-          } else {
-            tab.className = 'px-3 py-1 rounded-full hover:bg-white text-stone-600 transition';
-          }
-        }
-      }
-    });
-
-    // Keyboard Arrow navigation (Presentation Style)
-    window.addEventListener('keydown', (e) => {
-      const scrollPos = deck.scrollTop;
-      const height = window.innerHeight;
-      let currentIndex = Math.round(scrollPos / height);
-
-      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'Space') {
-        if (currentIndex < slides.length - 1) {
-          goToSlide(currentIndex + 1);
-        }
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        if (currentIndex > 0) {
-          goToSlide(currentIndex - 1);
-        }
-      }
-    });
-
-    // Init active state
-    navDots[0]?.classList.add('active-nav-dot');
-    document.getElementById('tab0').className = 'px-3 py-1 rounded-full bg-white text-stone-950 font-bold shadow-xs transition';
   </script>
 </body>
 </html>
